@@ -38,6 +38,7 @@ def solution(park, routes):
     for i, p in enumerate(park):
         arr = []
         for j, char in enumerate(p):
+            # park 좌표판을 나누는 과정 중 시작지점도 알아내기
             if char == START:
                 current_position[0], current_position[1] = i, j
             arr.append(char)

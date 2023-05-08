@@ -9,6 +9,7 @@ def solution(wallpaper):
     for i, line in enumerate(wallpaper):
         for j, char in enumerate(line):
             if char == FILE:
+                # 최소 좌표는 좌상단 파일의 위치와 같고, 최대 좌표는 우하단 파일의 위치 (+1,+1)과 같다.
                 min_x, min_y = min(min_x, i), min(min_y, j)
                 max_x, max_y = max(max_x, i+1), max(max_y, j+1)
     return [min_x, min_y, max_x, max_y]
