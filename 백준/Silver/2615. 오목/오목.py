@@ -1,9 +1,9 @@
 from sys import stdin
 
 BOARD_SIZE = 19
-OFFSETS = [(-1, 1), (0, 1), (1, 1), (1, 0)]
+DIRECTIONS = [(-1, 1), (0, 1), (1, 1), (1, 0)]
 
-flag = [[[True for _ in range(len(OFFSETS))] for _ in range(BOARD_SIZE)] for _ in range(BOARD_SIZE)]
+flag = [[[True for _ in range(len(DIRECTIONS))] for _ in range(BOARD_SIZE)] for _ in range(BOARD_SIZE)]
 board = []
 starting_points = []
 for i in range(BOARD_SIZE):
@@ -17,25 +17,25 @@ starting_points.sort(key=lambda x: (x[1], x[0]))
 
 for point in starting_points:
     i, j = point
-    for index, offset in enumerate(OFFSETS):
-        offset_i, offset_j = offset
+    for index, direction in enumerate(DIRECTIONS):
+        direct_i, direct_j = direction
         
-        is_succeed = 0
+        count = 0
         for n in range(BOARD_SIZE + 1):
-            next_i, next_j = i + offset_i*n, j + offset_j*n
+            next_i, next_j = i + direct_i*n, j + direct_j*n
             if 0 <= next_i < BOARD_SIZE and 0 <= next_j < BOARD_SIZE \
                     and flag[next_i][next_j][index] \
                     and board[next_i][next_j] == board[i][j]:
-                is_succeed += 1
+                count += 1
             else:
                 break
         
-        if is_succeed == 5:
+        if count == 5:
             result = (board[i][j], i, j)
             break
-        elif is_succeed > 5:
-            for s in range(1, is_succeed):
-                flag_i, flag_j = i + offset_i*s, j + offset_j*s
+        elif count > 5:
+            for s in range(1, count):
+                flag_i, flag_j = i + direct_i*s, j + direct_j*s
                 if 0 <= flag_i < BOARD_SIZE and 0 <= flag_j < BOARD_SIZE:
                     flag[flag_i][flag_j][index] = False
                 
