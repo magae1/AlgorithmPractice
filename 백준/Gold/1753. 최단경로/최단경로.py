@@ -1,5 +1,7 @@
-from sys import stdin, maxsize
+from sys import stdin
 import heapq
+
+UPPER_WEIGHT = 300000*10 + 1
 
 class Node:
     def __init__(self, n: int):
@@ -13,7 +15,7 @@ class Node:
 V, E = map(int, stdin.readline().split())
 
 nodes = [Node(n) for n in range(V + 1)]
-smallest_weights = [maxsize for _ in range(V + 1)]
+smallest_weights = [UPPER_WEIGHT for _ in range(V + 1)]
 
 start_node_idx = int(stdin.readline())
 
@@ -34,7 +36,8 @@ while pr_qu:
             heapq.heappush(pr_qu, (next_w, next_node_idx))
 
 for i in range(1, len(smallest_weights)):
-    if smallest_weights[i] == maxsize:
+    if smallest_weights[i] == UPPER_WEIGHT:
         print('INF')
     else:
         print(smallest_weights[i])
+        
