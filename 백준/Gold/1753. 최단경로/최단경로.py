@@ -7,6 +7,7 @@ class Node:
     def __init__(self, n: int):
         self.n = n
         self.edges = []
+        self.is_visited = False
         
     def add_edges(self, w: int, node_idx: int):
         self.edges.append((w, node_idx))
@@ -28,7 +29,10 @@ heapq.heappush(pr_qu, (0, start_node_idx))
 smallest_weights[start_node_idx] = 0
 while pr_qu:
     cur_w, cur_node_idx = heapq.heappop(pr_qu)
+    if nodes[cur_node_idx].is_visited:
+        continue
     
+    nodes[cur_node_idx].is_visited = True
     for edge in nodes[cur_node_idx].edges:
         next_w, next_node_idx = edge[0] + cur_w, edge[1]
         if next_w < smallest_weights[next_node_idx]:
