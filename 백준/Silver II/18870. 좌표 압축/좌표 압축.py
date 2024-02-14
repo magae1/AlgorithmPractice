@@ -1,0 +1,14 @@
+from sys import stdin
+
+N = int(stdin.readline().rstrip())
+
+coords = [int(c) for c in stdin.readline().split()]
+sorted_coords = sorted(set(coords))
+coord_map = dict((c, -1) for c in coords)
+
+for i, s_c in enumerate(sorted_coords):
+    coord_map[s_c] = i
+
+for c in coords:
+    print(coord_map[c], end=' ')
+    
