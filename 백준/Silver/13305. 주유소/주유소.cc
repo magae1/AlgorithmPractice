@@ -5,7 +5,8 @@ using namespace std;
 
 int main() {
     int N;
-    int min_spot_idx, cur_spot_idx, cur_cost;
+    int min_spot_idx, cur_spot_idx;
+    long cur_cost;
     cin >> N;
 
     vector<int> distances(N-1, 0);
@@ -23,7 +24,7 @@ int main() {
         if (costs[cur_spot_idx] < costs[min_spot_idx]) {
             min_spot_idx = cur_spot_idx;
         }
-        cur_cost += distances[cur_spot_idx] * costs[min_spot_idx];
+        cur_cost += (long)distances[cur_spot_idx] * (long)costs[min_spot_idx];
     }
 
     cout << cur_cost << endl;
