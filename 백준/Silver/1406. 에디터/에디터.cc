@@ -1,61 +1,74 @@
-#include<iostream>
+#include <iostream>
 #include <stack>
 #include <string>
-std::stack<char>leftonp;
-std::stack<char>rightonp;
 
-void Leftmove() {
-	if (!leftonp.empty()) {
-		rightonp.push(leftonp.top());
-		leftonp.pop();		
-	}
+using namespace std;
+
+const char L = 'L';
+const char D = 'D';
+const char B = 'B';
+const char P = 'P';
+
+void move_left(stack<char>& front_stk, stack<char>& back_stk) {
+  if (front_stk.empty()) return;
+  char top = front_stk.top();
+  front_stk.pop();
+  back_stk.push(top);
 }
-void Rightmove() {
-	if (!rightonp.empty()) {
-		leftonp.push(rightonp.top());
-		rightonp.pop();
-	}
+
+void move_right(stack<char>& front_stk, stack<char>& back_stk) {
+  if (back_stk.empty()) return;
+  char top = back_stk.top();
+  back_stk.pop();
+  front_stk.push(top);
 }
-void DeleteLeftone() {
-	if (!leftonp.empty())
-		leftonp.pop();
+
+void delete_left(stack<char>& front_stk) {
+  if (front_stk.empty()) return;
+  front_stk.pop();
 }
-void Pushonleft(char ch) {
-	leftonp.push(ch);
-}
-void Movelefttoright() {
-	while (!leftonp.empty()) {
-		rightonp.push(leftonp.top());
-		leftonp.pop();
-	}
-}
+
+void push_left(stack<char>& front_stk, char ch) { front_stk.push(ch); }
 
 int main() {
-	std::string ch;
-	std::cin >> ch;
-	for (int i = 0; i < ch.size(); i++)
-		leftonp.push(ch[i]);
-	int N;
-	std::cin >> N;
-	while (N--) {
-		char c;
-		std::cin >> c;
-		if (c == 'L')
-			Leftmove();
-		else if (c == 'D')
-			Rightmove();
-		else if (c == 'B')
-			DeleteLeftone();
-		else if (c == 'P') {
-			char num;
-			std::cin >> num;
-			Pushonleft(num);
-		}
-	}
-	Movelefttoright();
-	while (!rightonp.empty()) {
-		printf("%c", rightonp.top());
-		rightonp.pop();
-	}
-	return 0;
+  string input;
+  cin >> input;
+
+  stack<char> front_stk;
+  stack<char> back_stk;
+  for (char c : input) {
+    front_stk.push(c);
+  }
+
+  int m;
+  cin >> m;
+  while (m--) {
+    char command;
+    cin >> command;
+    if (command == L) {
+      move_left(front_stk, back_stk);
+    } else if (command == D) {
+      move_right(front_stk, back_stk);
+    } else if (command == B) {
+      delete_left(front_stk);
+    } else if (command == P) {
+      char ch;
+      cin >> ch;
+      push_left(front_stk, ch);
+    }
+  }
+
+  while (!front_stk.empty()) {
+    char front_top = front_stk.top();
+    front_stk.pop();
+    back_stk.push(front_top);
+  }
+
+  while (!back_stk.empty()) {
+    char back_top = back_stk.top();
+    cout << back_top;
+    back_stk.pop();
+  }
+  cout << '\n';
+  return 0;
 }
