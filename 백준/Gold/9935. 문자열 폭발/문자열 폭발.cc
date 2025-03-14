@@ -1,5 +1,4 @@
 #include <iostream>
-#include <stack>
 #include <string>
 
 using namespace std;
@@ -9,60 +8,32 @@ int main() {
   cin.tie(NULL);
   cout.tie(NULL);
 
-  string str, explosion_str;
+  string str, explosion_str, answer;
   cin >> str >> explosion_str;
 
   int explosion_size = explosion_str.length();
 
-  stack<char> left_stk;
-  stack<char> right_stk;
-
   for (char c : str) {
-    left_stk.push(c);
-  }
-
-  while (!left_stk.empty()) {
-    char left_ch = left_stk.top();
-    left_stk.pop();
-
-    if (left_ch == explosion_str[0]) {
+    answer.append(1, c);
+    if (answer.back() == explosion_str.back()) {
       bool is_matched = true;
-      stack<char> temp_stk;
-      for (int i = 1; i < explosion_size; i++) {
-        if (right_stk.empty()) {
-          is_matched = false;
-          break;
-        }
-
-        char cur_ch = right_stk.top();
-        right_stk.pop();
-        temp_stk.push(cur_ch);
-        if (cur_ch != explosion_str[i]) {
+      for (int i = 0; i < explosion_size - 1; i++) {
+        int ans_idx = answer.length() - explosion_size + i;
+        if (ans_idx < 0 || answer[ans_idx] != explosion_str[i]) {
           is_matched = false;
           break;
         }
       }
-
-      if (!is_matched) {
-        while (!temp_stk.empty()) {
-          right_stk.push(temp_stk.top());
-          temp_stk.pop();
-        }
-        right_stk.push(left_ch);
+      if (is_matched) {
+        answer.erase(answer.length() - explosion_size);
       }
-    } else {
-      right_stk.push(left_ch);
     }
   }
 
-  if (right_stk.empty()) {
+  if (answer.empty()) {
     cout << "FRULA" << '\n';
   } else {
-    while (!right_stk.empty()) {
-      cout << right_stk.top();
-      right_stk.pop();
-    }
-    cout << '\n';
+    cout << answer << '\n';
   }
 
   return 0;
