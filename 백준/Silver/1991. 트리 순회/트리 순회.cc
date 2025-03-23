@@ -25,15 +25,14 @@ void print_perorder(Node* root) {
   while (cur_node != nullptr) {
     cout << cur_node->get_alpha();
 
-    Node* left_node = cur_node->get_left_node();
-    if (left_node != nullptr) {
+    if (cur_node->get_left_node()) {
       stk.push(cur_node);
-      cur_node = left_node;
+      cur_node = cur_node->get_left_node();
       continue;
     }
 
     Node* right_node = cur_node->get_right_node();
-    if (right_node != nullptr) {
+    if (right_node) {
       cur_node = right_node;
       continue;
     }
@@ -62,7 +61,7 @@ void print_inorder(Node* root) {
     cout << cur_node->get_alpha();
 
     Node* right_node = cur_node->get_right_node();
-    if (right_node != nullptr) {
+    if (right_node) {
       cur_node = right_node;
       continue;
     }
