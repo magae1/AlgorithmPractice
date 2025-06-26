@@ -1,5 +1,3 @@
-import java.util.*;
-
 class Solution {
     private static final char OPEN = '(';
     private static final char CLOSE = ')';
