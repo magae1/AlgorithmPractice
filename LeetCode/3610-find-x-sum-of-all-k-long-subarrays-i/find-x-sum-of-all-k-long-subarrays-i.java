@@ -32,19 +32,9 @@ class Solution {
             });
 
             int sum = 0;
-            for (Integer q : qu) {
-                boolean isOk = false;
-                for (int c = 0; c < x; c++) {
-                    Map.Entry<Integer, Integer> countEntry = countEntries.get(c);
-                    if (countEntry.getKey().equals(q)) {
-                        isOk = true;
-                        break;
-                    }
-                }
-
-                if (isOk) {
-                    sum += q;
-                }
+            for (int c = 0; c < x && c < countEntries.size(); c++) {
+                Map.Entry<Integer, Integer> countEntry = countEntries.get(c);
+                sum += countEntry.getValue() * countEntry.getKey();
             }
 
             result[r] = sum;
