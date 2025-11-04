@@ -19,15 +19,12 @@ class Solution {
             increaseCount(n);
 
             List<Map.Entry<Integer, Integer>> countEntries = new ArrayList<>(countMap.entrySet());
-            Collections.sort(countEntries, new Comparator<Map.Entry<Integer, Integer>>() {
-                @Override
-                public int compare(Map.Entry<Integer, Integer> e1, Map.Entry<Integer, Integer> e2) {
-                    int compVal = e2.getValue().compareTo(e1.getValue());
-                    if (compVal == 0) {
-                        return e2.getKey().compareTo(e1.getKey());
-                    } else {
-                        return compVal;
-                    }
+            Collections.sort(countEntries, (e1, e2) ->  {
+                int compVal = e2.getValue().compareTo(e1.getValue());
+                if (compVal == 0) {
+                    return e2.getKey().compareTo(e1.getKey());
+                } else {
+                    return compVal;
                 }
             });
 
